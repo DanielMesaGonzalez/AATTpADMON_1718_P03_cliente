@@ -1,7 +1,9 @@
 
 package practica_3_aattaa_cliente;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -14,15 +16,16 @@ import java.nio.charset.StandardCharsets;
  * @author Daniel Mesa y Salvador Trujillo
  */
 public class PeticionPOST {
-    private String URLServidor; //URL donde vamos a enviar la petición.
-    private String DatosUsuario; //Contiene los datos del usuario: NICK y DNI.
+    private String DatosUsuario=""; //Contiene los datos del usuario: NICK y DNI.
+    private URL URLServidor; //URL donde vamos a enviar la petición.
+    
  
-     public PeticionPOST(String direccion,String Nick,String DNI){ //Constructor.
-        this.URLServidor =direccion;
-        this.DatosUsuario="Nick="+Nick+"&DNI="+DNI;
+     public PeticionPOST(String URLServidor) throws MalformedURLException{ //Constructor. throws MalformedURLException: Excepción de error en la URL.
+        this.URLServidor =new URL(URLServidor);
+        this.DatosUsuario=DatosUsuario="";
     }
 
-    public String getURLServidor() { //Devuelve la dirección.
+/*    public String getURLServidor() { //Devuelve la dirección.
         return URLServidor;
     }
 
@@ -36,13 +39,12 @@ public class PeticionPOST {
 
     public void setDatosUsuario(String DatosUsuario) { //Inserta los datos del usuario.
         this.DatosUsuario = DatosUsuario;
-    }
+    }*/
      
-    public String Acceder () throws MalformedURLException, IOException{ //throws MalformedURLException: Excepción de error en la URL.
+    public String Acceder (String Nick, String DNI) throws MalformedURLException, IOException{ //throws MalformedURLException: Excepción de error en la URL.
         byte[] envio = this.DatosUsuario.getBytes( StandardCharsets.UTF_8); //Datos del usuario que se envían.
         String respuesta="";// para almacenar lo que se responde
-        URL url = new URL(DatosUsuario);   //Instancia del tipo URL
-        URLConnection conectar = url.openConnection();// Abrimos la conexión mediante esta instancia
+        URLConnection conectar = URLServidor.openConnection();// Abrimos la conexión mediante esta instancia
         
   //++++++++++++++++++++++++++ ESPECIFICAMOS LO QUE VAMOS A ESCRIBIR +++++++++++++++++++++++++//
         
@@ -54,7 +56,16 @@ public class PeticionPOST {
         escribir.write(DatosUsuario);  //Escribe los datos del usuario
         //Cuando se introducen..
         escribir.close(); //Finalizamos 
-        return null; //Es un string que nos debe mostrar la cadena (respuesta) 
+        
+        
+  //+++++++++++++++++++++++++ LECTURA DE FLUJO ++++++++++++++++++++++++++++++++++++++++++++++//
+	BufferedReader leer = new BufferedReader(new InputStreamReader(conectar.getInputStream())); // Recibimos toda a respuesta
+	String cadena;
+	//procesamos al salida
+	while ((cadena = leer.readLine()) != null) {
+		respuesta+= respuesta;
+	}
+	return respuesta;
         
     }
 }

@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -21,6 +22,7 @@ import java.io.InputStream;
  * @author Juan Carlos Cuevas MartÃ­nez
  */
 public class Main {
+    Usuario user=new Usuario();
     /**
      * @param args the command line arguments
      */
@@ -33,5 +35,19 @@ public class Main {
         Usuario user = od.LeerNIF();
         if(user!=null)
             System.out.println("usuario: "+user.toString());
+        else{JOptionPane.showMessageDialog(null, "ERROR al leer los datos de la tarjeta");}
+        
+        //TAREA 3. Conseguir que el cliente se identifique correctamente
+        //con el servidor
+         String DNI="", Nick="";
+         
+  //+++++++++++++++++ CREAMOS LA PETICIÓN PARA EL SERVIDOR +++++++++++++++++++++//
+  
+       PeticionPOST peticion=new PeticionPOST("http://localhost:8080/Practica_3_AATTAA/CompruebaBBDD");//revisar en ECLIPSE
+       peticion.Acceder("Nick",user.getNick()); 
+       peticion.Acceder("DNI",user.getNif());
+       String respuesta = peticion.Acceder(Nick, DNI);
+      
+   //+++++++ AQUÍ INDICAMOS LOS POSIBLES ERRORES 40x 20x etc+++++++++++//
     }
 }
