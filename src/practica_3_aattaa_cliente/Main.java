@@ -34,20 +34,23 @@ public class Main {
         ObtenerDatos od = new ObtenerDatos();
         Usuario user = od.LeerNIF();
         if(user!=null)
+            
             System.out.println("usuario: "+user.toString());
-        else{JOptionPane.showMessageDialog(null, "ERROR al leer los datos de la tarjeta");}
-        
+        else{
+            JOptionPane.showMessageDialog(null, "ERROR al leer los datos de la tarjeta");}
+    
         //TAREA 3. Conseguir que el cliente se identifique correctamente
         //con el servidor
-         String DNI="", Nick="";
+         String nif="", nick="";
          
   //+++++++++++++++++ CREAMOS LA PETICIÓN PARA EL SERVIDOR +++++++++++++++++++++//
   
-       PeticionPOST peticion=new PeticionPOST("http://localhost:8080/Practica_3_AATTAA/CompruebaBBDD");//revisar en ECLIPSE
-       peticion.Acceder("Nick",user.getNick()); 
-       peticion.Acceder("DNI",user.getNif());
-       String respuesta = peticion.Acceder(Nick, DNI);
+       PeticionPOST peticion=new PeticionPOST("http://localhost:8080/DNIE/Registro");
+       peticion.Acceder("nick",user.getNick()); 
+       peticion.Acceder("nif",user.getNif());
+       String respuesta = peticion.Acceder(nick, nif);
       
    //+++++++ AQUÍ INDICAMOS LOS POSIBLES ERRORES 40x 20x etc+++++++++++//
+    
     }
 }

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.smartcardio.*;
+import javax.swing.JOptionPane;
 
 /**
  * La clase ObtenerDatos implementa cuatro métodos públicos que permiten obtener
@@ -308,8 +309,11 @@ public class ObtenerDatos {
         apellidos=apellidos[0].split(" ");
         a1=apellidos[0];
         a2=apellidos[1];
+        NICK=n.substring(0,1)+ a1 + a2.substring(0,1);
+		   
         Usuario user= new Usuario(n, a1, a2, DNI, NICK);
-        
+        JOptionPane.showMessageDialog(null, "Lectura DNIe: NOMBRE:" 
+                + n + " " + a1 + " " + a2 + " "+ DNI + " "+ NICK);
        return user;
     }
     

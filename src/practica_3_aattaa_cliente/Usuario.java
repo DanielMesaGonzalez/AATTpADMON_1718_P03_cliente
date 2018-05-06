@@ -71,4 +71,8 @@ public class Usuario implements Serializable {
         this.nick = nick;
     }
           
+     @Override
+    public String toString(){
+        return nombre+" "+apellido1+" "+apellido2+" "+nif+" "+nick;
+    }
 }

@@ -25,23 +25,8 @@ public class PeticionPOST {
         this.DatosUsuario=DatosUsuario="";
     }
 
-/*    public String getURLServidor() { //Devuelve la dirección.
-        return URLServidor;
-    }
-
-    public void setURLServidor(String URLServidor) { //Inserta la dirección.
-        this.URLServidor = URLServidor;
-    }
-
-    public String getDatosUsuario() { //Devuelve los datos del usuario.
-        return DatosUsuario;
-    }
-
-    public void setDatosUsuario(String DatosUsuario) { //Inserta los datos del usuario.
-        this.DatosUsuario = DatosUsuario;
-    }*/
      
-    public String Acceder (String Nick, String DNI) throws MalformedURLException, IOException{ //throws MalformedURLException: Excepción de error en la URL.
+    public String Acceder (String nick, String nif) throws MalformedURLException, IOException{ //throws MalformedURLException: Excepción de error en la URL.
         byte[] envio = this.DatosUsuario.getBytes( StandardCharsets.UTF_8); //Datos del usuario que se envían.
         String respuesta="";// para almacenar lo que se responde
         URLConnection conectar = URLServidor.openConnection();// Abrimos la conexión mediante esta instancia
