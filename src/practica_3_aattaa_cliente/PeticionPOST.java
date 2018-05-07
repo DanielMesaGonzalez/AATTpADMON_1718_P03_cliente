@@ -37,8 +37,8 @@ public class PeticionPOST {
         this.DatosUsuario=DatosUsuario;
     }
 
-    String NotFound="USUARIO NO ENCONTRADO";
-    String Found="USUARIO AUTENTICADO CORRECTAMENTE";
+    String NotFound="ERROR 401:  USUARIO NO ENCONTRADO";
+    String Found="200 OK:  USUARIO AUTENTICADO CORRECTAMENTE";
     
      public void add (String nick, String nif) throws UnsupportedEncodingException{
 		//codificamos cada uno de los valores
