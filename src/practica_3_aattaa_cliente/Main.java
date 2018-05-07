@@ -45,12 +45,11 @@ public class Main {
          
   //+++++++++++++++++ CREAMOS LA PETICIÓN PARA EL SERVIDOR +++++++++++++++++++++//
   
-       PeticionPOST peticion=new PeticionPOST("http://localhost:8080/DNIE/Registro");
-       peticion.Acceder("nick",user.getNick()); 
-       peticion.Acceder("nif",user.getNif());
+       PeticionPOST peticion=new PeticionPOST("http://localhost:8080/DNIE/CompruebaBBDD");
+       peticion.add("nick",user.getNick()); 
+       peticion.add("nif",user.getNif());
        String respuesta = peticion.Acceder(nick, nif);
-      
-   //+++++++ AQUÍ INDICAMOS LOS POSIBLES ERRORES 40x 20x etc+++++++++++//
+        JOptionPane.showMessageDialog(null, ""+respuesta);
     
     }
 }

@@ -303,7 +303,7 @@ public class ObtenerDatos {
         String[] nomb,apellidos;
         nomb=NOMBRE.split(",");
         apellidos=NOMBRE.split(",");
-        nomb=nomb[1].split(Pattern.quote("(AUTENTICACIÃ“N)"));
+        nomb=nomb[1].split(Pattern.quote("(AUTENTICACIÓN)"));
         n=nomb[0].trim();//Quitar espacios nombre
         
         apellidos=apellidos[0].split(" ");
@@ -312,8 +312,7 @@ public class ObtenerDatos {
         NICK=n.substring(0,1)+ a1 + a2.substring(0,1);
 		   
         Usuario user= new Usuario(n, a1, a2, DNI, NICK);
-        JOptionPane.showMessageDialog(null, "Lectura DNIe: NOMBRE:" 
-                + n + " " + a1 + " " + a2 + " "+ DNI + " "+ NICK);
+        JOptionPane.showMessageDialog(null, "Lectura DNIe:" + n + " " + a1 + " " + a2 + " "+ DNI + " "+ NICK);
        return user;
     }
     

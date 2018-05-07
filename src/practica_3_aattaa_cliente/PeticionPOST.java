@@ -5,16 +5,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
  *
  * @author Daniel Mesa y Salvador Trujillo
  */
+
+
 public class PeticionPOST {
     private String DatosUsuario=""; //Contiene los datos del usuario: NICK y DNI.
     private URL URLServidor; //URL donde vamos a enviar la petición.
@@ -22,35 +26,55 @@ public class PeticionPOST {
  
      public PeticionPOST(String URLServidor) throws MalformedURLException{ //Constructor. throws MalformedURLException: Excepción de error en la URL.
         this.URLServidor =new URL(URLServidor);
-        this.DatosUsuario=DatosUsuario="";
+        this.DatosUsuario="";
     }
 
+    public String getDatosUsuario() {
+        return DatosUsuario;
+    }
+
+    public void setDatosUsuario(String DatosUsuario) {
+        this.DatosUsuario=DatosUsuario;
+    }
+
+    String NotFound="USUARIO NO ENCONTRADO";
+    String Found="USUARIO AUTENTICADO CORRECTAMENTE";
+    
+     public void add (String nick, String nif) throws UnsupportedEncodingException{
+		//codificamos cada uno de los valores
+		if (DatosUsuario.length()>0)
+		DatosUsuario+= "&"+ URLEncoder.encode(nick, "UTF-8")+ "=" +URLEncoder.encode(nif, "UTF-8");
+		else
+		DatosUsuario+= URLEncoder.encode(nick, "UTF-8")+ "=" +URLEncoder.encode(nif, "UTF-8");
+	}
      
     public String Acceder (String nick, String nif) throws MalformedURLException, IOException{ //throws MalformedURLException: Excepción de error en la URL.
-        byte[] envio = this.DatosUsuario.getBytes( StandardCharsets.UTF_8); //Datos del usuario que se envían.
-        String respuesta="";// para almacenar lo que se responde
-        URLConnection conectar = URLServidor.openConnection();// Abrimos la conexión mediante esta instancia
-        
-  //++++++++++++++++++++++++++ ESPECIFICAMOS LO QUE VAMOS A ESCRIBIR +++++++++++++++++++++++++//
-        
-        conectar.setDoOutput(true); //Indicamos que vamos a comenzar a escribir 
-        conectar.setRequestProperty("Content-Type","application/x-www-form-urlencoded");//Indicamos el tipo de contenido.
-        conectar.setRequestProperty("charset","UTF-8");//Indicamos el tipo de codificación.
-        conectar.setRequestProperty("Conent-length", Integer.toString(envio.length));//Longitud del contenido.
-        OutputStreamWriter escribir = new OutputStreamWriter(conectar.getOutputStream());//obtenemos el flujo de lo que se escribe 
-        escribir.write(DatosUsuario);  //Escribe los datos del usuario
-        //Cuando se introducen..
-        escribir.close(); //Finalizamos 
-        
-        
-  //+++++++++++++++++++++++++ LECTURA DE FLUJO ++++++++++++++++++++++++++++++++++++++++++++++//
-	BufferedReader leer = new BufferedReader(new InputStreamReader(conectar.getInputStream())); // Recibimos toda a respuesta
-	String cadena;
-	//procesamos al salida
-	while ((cadena = leer.readLine()) != null) {
-		respuesta+= respuesta;
+		String respuesta = "";
+		//abrimos la conexion
+		URLConnection conn = URLServidor.openConnection();
+                
+     //++++++++++++++++++++++++++ ESCRIBIR +++++++++++++++++++++++++//
+		
+                 conn.setDoOutput(true);    //Especificamos que vamos a escribir
+		OutputStreamWriter escribir = new OutputStreamWriter(conn.getOutputStream()); //Para obtener el flujo de lectura
+		escribir.write(DatosUsuario); //Escribimos los datos del usuario
+		escribir.close(); //Finalizamos la escritura
+		
+    //+++++++++++++++++++++++++ LECTURA DE FLUJO ++++++++++++++++++++++++++++++++++++++++++++++//
+		BufferedReader lectura = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		String cadena;
+                
+		while ((cadena = lectura.readLine()) !=null) { //Realizamos la lectura concatenando la respuesta del jsp
+		
+                    if(NotFound.equals(cadena) || Found.equals(cadena)){
+                        respuesta+= cadena;
+                    }
+                }
+		return respuesta;
 	}
-	return respuesta;
+  
+
         
-    }
+  
+
 }
