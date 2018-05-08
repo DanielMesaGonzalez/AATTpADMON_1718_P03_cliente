@@ -14,14 +14,15 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- *
+ * Clase usada para generar la petición HTTP REQUEST de la aplicación cliente 
+ * hacia el servidor 
  * @author Daniel Mesa y Salvador Trujillo
  */
 
 
 public class PeticionPOST {
-    private String DatosUsuario=""; //Contiene los datos del usuario: NICK y DNI.
-    private URL URLServidor; //URL donde vamos a enviar la petición.
+    private String DatosUsuario=""; 
+    private URL URLServidor; 
     
  
      public PeticionPOST(String URLServidor) throws MalformedURLException{ //Constructor. throws MalformedURLException: Excepción de error en la URL.
@@ -37,8 +38,18 @@ public class PeticionPOST {
         this.DatosUsuario=DatosUsuario;
     }
 
-    String NotFound="ERROR 401:  USUARIO NO ENCONTRADO";
-    String Found="200 OK:  USUARIO AUTENTICADO CORRECTAMENTE";
+    String NotFound="ERROR 401:  USUARIO NO ENCONTRADO";   //Variable para comparar la respuesta del Servidor.
+    String Found="200 OK:  USUARIO AUTENTICADO CORRECTAMENTE"; //Variable para comparar la respuesta del Servidor.
+    
+    /**
+ * 
+ * Método usado para codificar el nick y el nif que se va a enviar en la petición del 
+ * cliente al servidor.
+ * 
+ * @param nick recogido de la tarjeta DNIe introducida en el lector
+ * @param nif recogido de la tarjeta DNIe introducida en el lector
+     * @throws java.io.UnsupportedEncodingException
+ */
     
      public void add (String nick, String nif) throws UnsupportedEncodingException{
 		//codificamos cada uno de los valores
@@ -47,6 +58,19 @@ public class PeticionPOST {
 		else
 		DatosUsuario+= URLEncoder.encode(nick, "UTF-8")+ "=" +URLEncoder.encode(nif, "UTF-8");
 	}
+     
+     /**
+ * Aplicaciones TelemÃ¡ticas para la AdministraciÃ³n
+ *  
+ * Método usado para enviar y recibir los datos del servidor. Los datos de envío serán 
+ * el nick y el nif del usuario y los de respuesta será un mensaje 200 OK o 401 BAD AUTORIZADO
+ * 
+ * @param nick recogido del DNIe 
+ * @param nif recogido del DNIe
+     * @return 
+     * @throws java.net.MalformedURLException
+ * 
+ */
      
     public String Acceder (String nick, String nif) throws MalformedURLException, IOException{ //throws MalformedURLException: Excepción de error en la URL.
 		String respuesta = "";

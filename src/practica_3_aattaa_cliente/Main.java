@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
 
 
 /**
- * Aplicaciones TelemÃ¡ticas para la AdministraciÃ³n
+ * Aplicaciones Telemáticas para la Administración
  * 
- * Este programa debe ller el nombre y NIF de un usuario del DNIe, formar el identificador de usuario y autenticarse con un servidor remoto a travÃ©s de HTTP 
- * @author Juan Carlos Cuevas MartÃ­nez
+ * Este programa debe leer el nombre y NIF de un usuario del DNIe, formar el identificador de usuario y autenticarse con un servidor remoto a travÃ©s de HTTP 
+ * @author Daniel Mesa y Salvador Trujillo
  */
 public class Main {
     Usuario user=new Usuario();
